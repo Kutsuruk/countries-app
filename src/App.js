@@ -1,10 +1,15 @@
 import React from "react";
 import Header from "./components/Header";
+import Main from "./components/Main";
+import Controls from "./components/Controls";
 
 function App() {
   return (
     <>
-      <Header />
+        <Header />
+        <Main>
+            <Controls />
+        </Main>
     </>
   );
 }
