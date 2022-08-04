@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import {ALL_COUNTRIES} from "../config";
+import {useHistory} from 'react-router-dom'
+
 import List from "../components/List";
 import Card from "../components/Card";
 import Controls from "../components/Controls";
-import {useNavigate} from 'react-router-dom'
 
 export const HomePage = ({setCountries, countries}) => {
-    const history = useNavigate()
     const [filteredCountries, setFilteredCountries] = useState(countries)
+
+    const {push} = useHistory()
 
     const handleSearch = (search, region) => {
         let data = [...countries]
@@ -24,6 +26,7 @@ export const HomePage = ({setCountries, countries}) => {
         axios.get(ALL_COUNTRIES).then(
             ({data}) => setCountries(data)
         )
+        // eslint-disable-next-line
     }, [])
 
     return(
@@ -46,17 +49,14 @@ export const HomePage = ({setCountries, countries}) => {
                                 },
                                 {
                                     title: 'Capital',
-                                    // description: country.capital.toLocaleString()
+                                    description: country.capital
                                 }
                             ]
                         }
 
                         return <Card
-                            onClick={(e) => {
-                                e.preventDefault()
-                                history(`/country/${country.name}`)
-                            }}
                             key={country.name}
+                            onClick={() => push(`/country/${country.name}`)}
                             {...countryInfo}
                         />
                     })}
